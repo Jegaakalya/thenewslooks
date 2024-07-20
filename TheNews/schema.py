@@ -2,7 +2,6 @@ import graphene
 from graphene_django.types import DjangoObjectType
 from .models import *
 
-
 class CategoryType(DjangoObjectType):
     class Meta:
         model = Category

@@ -2,10 +2,19 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 
+class language(models.Model):
+    language_name = models.CharField(max_length=50)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="languageCreatedBy")
+    modifie_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, null=True, blank=True,
+                                   related_name="languagemodifie_by")
+    created_at = models.DateTimeField(auto_now_add=True)
+    modifie_at = models.DateTimeField(auto_now=True)
+
 
 class CustomUser(AbstractUser):
     phone_number = models.CharField(max_length=15, blank=True, null=True)
-    address = models.TextField(blank=True, null=True)
+    language = models.ForeignKey(language, on_delete=models.PROTECT, blank=True, null=True)
+    location = models.TextField(blank=True, null=True)
     date_of_birth = models.DateField(blank=True, null=True)
     is_admin = models.BooleanField(default=False)
     is_user = models.BooleanField(default=False)
